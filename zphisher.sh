@@ -251,7 +251,7 @@ install_ngrok() {
         esac
         wget "https://github.com/tchelospy/NgrokTest/blob/master/ngrok-stable-linux-${architectureURL}.zip?raw=true" -O ngrok.zip
         unzip ngrok.zip
-		chmod 777 ngrok
+	chmod 777 ngrok
         cp ngrok .server/ngrok
         cp ngrok /data/data/com.termux/files/usr/bin/ngrok
         chmod 700 .server/ngrok
