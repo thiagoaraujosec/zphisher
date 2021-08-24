@@ -253,9 +253,7 @@ install_ngrok() {
         unzip ngrok.zip
 	chmod 777 ngrok
         cp ngrok .server/ngrok
-        cp ngrok /data/data/com.termux/files/usr/bin/ngrok
         chmod 700 .server/ngrok
-        chmod 700 /data/data/com.termux/files/usr/bin/ngrok
         rm ngrok ngrok.zip
 	fi
 	
